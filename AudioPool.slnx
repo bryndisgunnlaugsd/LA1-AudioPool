@@ -1,2 +1,6 @@
 <Solution>
+  <Project Path="AudioPool.Models/AudioPool.Models.csproj" />
+  <Project Path="AudioPool.Repositories/AudioPool.Repositories.csproj" />
+  <Project Path="AudioPool.Services/AudioPool.Services.csproj" />
+  <Project Path="AudioPool.WebApi/AudioPool.WebApi.csproj" />
 </Solution>
