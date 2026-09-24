@@ -8,10 +8,12 @@ namespace AudioPool.WebApi.Controllers;
 public class ArtistsController : ControllerBase
 {
     private readonly IArtistService _artistService;
+    private readonly IAlbumService _albumService;
 
-    public ArtistsController(IArtistService artistService)
+    public ArtistsController(IArtistService artistService, IAlbumService albumService)
     {
         _artistService = artistService;
+        _albumService = albumService;
     }
 
     [HttpGet("")]
@@ -32,5 +34,14 @@ public class ArtistsController : ControllerBase
         if (artist == null) return NotFound();
 
         return Ok(artist);
+    }
+
+    [HttpGet("{id:int}/albums")]
+    public IActionResult GetAlbumsByArtistId(int id)
+    {
+        var albums = _albumService.GetAlbumsByArtistId(id);
+        if (albums == null) return NotFound();
+
+        return Ok(albums);
     }
 }
