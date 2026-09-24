@@ -15,6 +15,15 @@ public class SongService : ISongService
         _songRepository = songRepository;
     }
 
+    public SongDetailsDto? GetSongById(int id)
+    {
+        var song = _songRepository.GetSongById(id);
+        if (song == null) return null;
+
+        AddSongLinks(song.Links, song.Id, song.Album.Id);
+        return song;
+    }
+
     public IEnumerable<SongDto>? GetSongsByAlbumId(int albumId)
     {
         var songs = _songRepository.GetSongsByAlbumId(albumId)?.ToList();

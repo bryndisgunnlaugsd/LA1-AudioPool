@@ -1,5 +1,6 @@
 using AudioPool.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using AudioPool.WebApi.Attributes;
 
 namespace AudioPool.WebApi.Controllers;
 
@@ -14,6 +15,7 @@ public class GenresController : ControllerBase
         _genreService = genreService;
     }
 
+    [ApiTokenAuthorization]
     [HttpGet("")]
     public IActionResult GetAllGenres()
     {
