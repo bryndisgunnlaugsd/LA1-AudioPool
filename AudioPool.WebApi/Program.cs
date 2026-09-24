@@ -26,6 +26,10 @@ builder.Services.AddScoped<IArtistService, ArtistService>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 
+// Song
+builder.Services.AddScoped<ISongRepository, SongRepository>();
+builder.Services.AddScoped<ISongService, SongService>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

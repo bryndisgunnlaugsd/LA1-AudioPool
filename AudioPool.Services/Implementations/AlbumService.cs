@@ -15,6 +15,15 @@ public class AlbumService : IAlbumService
         _albumRepository = albumRepository;
     }
 
+    public AlbumDetailsDto? GetAlbumById(int id)
+    {
+        var album = _albumRepository.GetAlbumById(id);
+        if (album == null) return null;
+
+        AddAlbumLinks(album.Links, album.Id);
+        return album;
+    }
+
     public IEnumerable<AlbumDto>? GetAlbumsByArtistId(int artistId)
     {
         var albums = _albumRepository.GetAlbumsByArtistId(artistId)?.ToList();
