@@ -49,7 +49,7 @@ public class ArtistService : IArtistService
             _artistRepository.GetGenreIdsByArtistId(artistId).Select(genreId => $"/api/genres/{genreId}"));
     }
 
-    private ArtistDto CreateArtist(ArtistInputModel model)
+    public ArtistDto CreateArtist(ArtistInputModel model)
     {
        var artist = _artistRepository.CreateArtist(model);
 
@@ -57,7 +57,7 @@ public class ArtistService : IArtistService
         return artist;
     }
 
-    private ArtistDto? UpdateArtist(int id, ArtistInputModel model)
+    public ArtistDto? UpdateArtist(int id, ArtistInputModel model)
     {
         var artist = _artistRepository.UpdateArtist(id, model);
         if (artist == null)

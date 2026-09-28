@@ -3,6 +3,7 @@ using AudioPool.Models;
 using AudioPool.Models.DTOs;
 using AudioPool.Repositories.Interfaces;
 using AudioPool.Services.Interfaces;
+using AudioPool.Models.InputModels;
 
 namespace AudioPool.Services.Implementations;
 
@@ -35,6 +36,20 @@ public class AlbumService : IAlbumService
         }
 
         return albums;
+    }
+
+    public AlbumDto? CreateAlbum(AlbumInputModel model)
+    {
+        var album = _albumRepository.CreateAlbum(model);
+        if (album == null) return null;
+
+        AddAlbumLinks(album.Links, album.Id);
+        return album;
+    }
+
+    public bool DeleteAlbum(int id)
+    {
+        return _albumRepository.DeleteAlbum(id);
     }
 
     private void AddAlbumLinks(ExpandoObject links, int albumId)
