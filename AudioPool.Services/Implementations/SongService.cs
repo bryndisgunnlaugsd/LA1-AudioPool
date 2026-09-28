@@ -3,6 +3,7 @@ using AudioPool.Models;
 using AudioPool.Models.DTOs;
 using AudioPool.Repositories.Interfaces;
 using AudioPool.Services.Interfaces;
+using AudioPool.Models.InputModels;
 
 namespace AudioPool.Services.Implementations;
 
@@ -35,6 +36,29 @@ public class SongService : ISongService
         }
 
         return songs;
+    }
+
+    public SongDto? CreateSong(SongInputModel model)
+    {
+        var song = _songRepository.CreateSong(model);
+        if (song == null) return null;
+
+        AddSongLinks(song.Links, song.Id, model.AlbumId!.Value);
+        return song;
+    }
+
+    public SongDto? UpdateSong(int id, SongInputModel model)
+    {
+        var song = _songRepository.UpdateSong(id, model);
+        if (song == null) return null;
+
+        AddSongLinks(song.Links, song.Id, model.AlbumId!.Value);
+        return song;
+    }
+
+    public bool DeleteSong(int id)
+    {
+        return _songRepository.DeleteSong(id);
     }
 
     private static void AddSongLinks(ExpandoObject links, int songId, int albumId)
