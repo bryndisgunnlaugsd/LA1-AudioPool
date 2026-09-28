@@ -1,6 +1,0 @@
-@AudioPool.WebApi_HostAddress = http://localhost:5225
-
-GET {{AudioPool.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
