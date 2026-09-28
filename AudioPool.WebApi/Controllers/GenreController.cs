@@ -16,7 +16,6 @@ public class GenresController : ControllerBase
         _genreService = genreService;
     }
 
-    [ApiTokenAuthorization]
     [HttpGet("")]
     public IActionResult GetAllGenres()
     {

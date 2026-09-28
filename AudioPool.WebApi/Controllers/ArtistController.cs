@@ -1,5 +1,7 @@
 using AudioPool.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using AudioPool.Models.InputModels;
+using AudioPool.WebApi.Attributes;
 
 namespace AudioPool.WebApi.Controllers;
 
@@ -44,4 +46,44 @@ public class ArtistsController : ControllerBase
 
         return Ok(albums);
     }
+
+    [ApiTokenAuthorization]
+    [HttpPost]
+
+    public IActionResult CreateArtist(ArtistInputModel model)
+    {
+        var artist = _artistService.CreateArtist(model);
+
+        return CreatedAtAction(nameof(GetArtistById),
+        new {id = artist.Id }, 
+        artist);
+    }
+    [ApiTokenAuthorization]
+    [HttpPut("{id:int}")]
+    public IActionResult UpdateArtist(int id, ArtistInputModel model)
+    {
+       var artist = _artistService.UpdateArtist(id, model);
+        if (artist == null)
+        {
+            return NotFound();
+        }
+    
+        return Ok(artist);
+    }
+
+    [ApiTokenAuthorization]
+    [HttpPut("{artistId:int}/genres/{genreId:int}")]
+    public IActionResult LinkArtistToGenre(int artistId, int genreId)
+    {
+    
+        bool status = _artistService.LinkArtistToGenre(artistId, genreId);
+
+        if (status)
+        {
+            return NoContent();
+        }
+        
+        return NotFound();
+    }
+
 }
