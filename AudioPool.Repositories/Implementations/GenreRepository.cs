@@ -1,6 +1,8 @@
 using AudioPool.Models.DTOs;
 using AudioPool.Repositories.Contexts;
 using AudioPool.Repositories.Interfaces;
+using AudioPool.Models.Entities;
+using AudioPool.Models.InputModels;
 
 namespace AudioPool.Repositories.Implementations;
 
@@ -45,4 +47,18 @@ public class GenreRepository : IGenreRepository
             .SelectMany(g => g.Artists.Select(a => a.Id))
             .ToList();
     }
+
+    public GenreDto CreateGenre(GenreInputModel model)
+{
+    var genra = new Genre{
+        Name = model.Name,
+        DateCreated = DateTime.UtcNow,
+        ModifiedBy = "AudioPoolAdmin"
+    };
+
+    _dbContext.Genres.Add(genra);
+    _dbContext.SaveChanges();
+
+    return new GenreDto{Id = genra.Id,Name = genra.Name};
+}
 }

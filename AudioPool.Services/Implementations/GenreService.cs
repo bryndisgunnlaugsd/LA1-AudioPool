@@ -3,6 +3,7 @@ using AudioPool.Models;
 using AudioPool.Models.DTOs;
 using AudioPool.Repositories.Interfaces;
 using AudioPool.Services.Interfaces;
+using AudioPool.Models.InputModels;
 
 namespace AudioPool.Services.Implementations;
 
@@ -41,5 +42,14 @@ public class GenreService : IGenreService
         links.AddReference("self", $"/api/genres/{genreId}");
         links.AddListReference("artists",
             _genreRepository.GetArtistIdsByGenreId(genreId).Select(artistId => $"/api/artists/{artistId}"));
+    }
+
+    public GenreDto CreateGenre(GenreInputModel model)
+    {
+    var genre = _genreRepository.CreateGenre(model);
+
+    AddGenreLinks(genre.Links, genre.Id);
+
+    return genre;
     }
 }

@@ -1,6 +1,7 @@
 using AudioPool.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using AudioPool.WebApi.Attributes;
+using AudioPool.Models.InputModels;
 
 namespace AudioPool.WebApi.Controllers;
 
@@ -30,4 +31,18 @@ public class GenresController : ControllerBase
 
         return Ok(genre);
     }
+
+    [ApiTokenAuthorization]
+    [HttpPost]
+
+    public IActionResult CreateGenre(GenreInputModel model)
+    {
+        var genre = _genreService.CreateGenre(model);
+
+        return CreatedAtAction(nameof(GetGenreById),
+        new {id = genre.Id }, 
+        genre);
+    }
+
+
 }
